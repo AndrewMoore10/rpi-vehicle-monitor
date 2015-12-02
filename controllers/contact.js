@@ -1,12 +1,21 @@
 var secrets = require('../config/secrets');
 var nodemailer = require("nodemailer");
-var transporter = nodemailer.createTransport({
-  service: 'Mailgun',
-  auth: {
-    user: secrets.mailgun.user,
-    pass: secrets.mailgun.password
-  }
-});
+var smtpTransport = require('nodemailer-smtp-transport');
+var transporter = nodemailer.createTransport(
+  smtpTransport(
+    {
+      host: secrets.verizon_smtp.host,
+      port: secrets.verizon_smtp.port
+    }
+  )
+);
+// {
+//   service: 'Mailgun',
+//   auth: {
+//     user: secrets.mailgun.user,
+//     pass: secrets.mailgun.password
+//   }
+// });
 
 /**
  * GET /contact
@@ -37,7 +46,7 @@ exports.postContact = function(req, res) {
   var from = req.body.email;
   var name = req.body.name;
   var body = req.body.message;
-  var to = 'your@email.com';
+  var to = 'Andrew.Moore@10news.com';
   var subject = 'Contact Form | Hackathon Starter';
 
   var mailOptions = {
