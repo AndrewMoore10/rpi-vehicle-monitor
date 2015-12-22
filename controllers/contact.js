@@ -4,8 +4,8 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var transporter = nodemailer.createTransport(
   smtpTransport(
     {
-      host: secrets.verizon_smtp.host,
-      port: secrets.verizon_smtp.port
+      host: secrets.smtp.host,
+      port: secrets.smtp.port
     }
   )
 );
